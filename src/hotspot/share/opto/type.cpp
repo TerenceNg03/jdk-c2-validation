@@ -1430,7 +1430,12 @@ bool TypeF::is_nan()    const {
 #ifndef PRODUCT
 void TypeF::dump2( Dict &d, uint depth, outputStream *st ) const {
   Type::dump2(d,depth, st);
-  st->print("%f", _f);
+  const char* bits = reinterpret_cast<const char*>(&_f);
+  for(std::size_t n = 0; n < sizeof _f; ++n){
+    for(int i = 0; i < 8; i++){
+      st->print("%d", (bits[n]>>i) & 1);
+    }
+  }
 }
 #endif
 
@@ -1675,7 +1680,12 @@ bool TypeD::is_nan()    const {
 #ifndef PRODUCT
 void TypeD::dump2( Dict &d, uint depth, outputStream *st ) const {
   Type::dump2(d,depth,st);
-  st->print("%f", _d);
+  const char* bits = reinterpret_cast<const char*>(&_d);
+  for(std::size_t n = 0; n < sizeof _d; ++n){
+    for(int i = 0; i < 8; i++){
+      st->print("%d", (bits[n]>>i) & 1);
+    }
+  }
 }
 #endif
 
