@@ -1173,7 +1173,7 @@ Node *LShiftLNode::Ideal(PhaseGVN *phase, bool can_reshape) {
     assert( add1 != add1->in(1), "dead loop in LShiftLNode::Ideal" );
 
     // Left input is an add of the same number?
-    if (con != (BitsPerJavaLong - 1) && add1->in(1) == add1->in(2)) {
+    if (add1->in(1) == add1->in(2)) {
       // Convert "(x + x) << c0" into "x << (c0 + 1)"
       // Can only be applied if c0 != 63 because:
       // (x + x) << 63 = 2x << 63, while
