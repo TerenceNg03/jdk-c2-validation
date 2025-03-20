@@ -1131,19 +1131,17 @@ int CallStaticJavaNode::extract_uncommon_trap_request(const Node* call) {
 
 #ifndef PRODUCT
 void CallStaticJavaNode::dump_spec(outputStream *st) const {
-  st->print("# Static ");
   if (_name != nullptr) {
-    st->print("%s", _name);
     int trap_req = uncommon_trap_request();
     if (trap_req != 0) {
       char buf[100];
-      st->print("(%s)",
-                 Deoptimization::format_trap_request(buf, sizeof(buf),
-                                                     trap_req));
+      st->print("trap::%s",
+        Deoptimization::trap_reason_name(Deoptimization::trap_request_reason(trap_req)));
+      ;
+    } else {
+      CallJavaNode::dump_spec(st);
     }
-    st->print(" ");
   }
-  CallJavaNode::dump_spec(st);
 }
 
 void CallStaticJavaNode::dump_compact_spec(outputStream* st) const {
