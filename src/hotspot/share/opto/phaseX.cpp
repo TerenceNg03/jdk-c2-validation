@@ -680,7 +680,51 @@ Node* PhaseGVN::transform(Node* n) {
   // Prevent parse phase transformation
   bool skip_opt = false;
   auto op = n->Opcode();
-  if (op == Op_LShiftL || op == Op_SubF){
+  if ( op == Op_LShiftI
+      || op == Op_LShiftL
+
+      || op == Op_RShiftI
+      || op == Op_RShiftL
+
+      || op == Op_AndI
+      || op == Op_AndL
+
+      || op == Op_OrI
+      || op == Op_OrL
+
+      || op == Op_LShiftI
+      || op == Op_LShiftL
+
+      || op == Op_NegI
+      || op == Op_NegL
+      || op == Op_NegF
+      || op == Op_NegD
+
+      || op == Op_AddI
+      || op == Op_AddL
+      || op == Op_AddF
+      || op == Op_AddD
+
+      || op == Op_SubI
+      || op == Op_SubL
+      || op == Op_SubF
+      || op == Op_SubD
+
+      || op == Op_DivI
+      || op == Op_DivL
+      || op == Op_DivF
+      || op == Op_DivD
+
+      || op == Op_MulI
+      || op == Op_MulL
+      || op == Op_MulF
+      || op == Op_MulD
+
+      || op == Op_SubI
+      || op == Op_SubL
+      || op == Op_SubF
+      || op == Op_SubD
+    ){
     record_for_igvn(n);
     skip_opt = true;
   }
