@@ -692,6 +692,9 @@ Node* PhaseGVN::transform(Node* n) {
       || op == Op_OrI
       || op == Op_OrL
 
+      || op == Op_XorI
+      || op == Op_XorL
+
       || op == Op_LShiftI
       || op == Op_LShiftL
 

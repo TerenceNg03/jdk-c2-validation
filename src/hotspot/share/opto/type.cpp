@@ -2234,19 +2234,6 @@ bool TypeLong::is_finite() const {
 //------------------------------dump2------------------------------------------
 // Dump TypeLong
 #ifndef PRODUCT
-static const char* longnamenear(jlong x, const char* xname, char* buf, size_t buf_size, jlong n) {
-  if (n > x) {
-    if (n >= x + 10000)  return nullptr;
-    os::snprintf_checked(buf, buf_size, "%s+" JLONG_FORMAT, xname, n - x);
-  } else if (n < x) {
-    if (n <= x - 10000)  return nullptr;
-    os::snprintf_checked(buf, buf_size, "%s-" JLONG_FORMAT, xname, x - n);
-  } else {
-    return xname;
-  }
-  return buf;
-}
-
 static const char* longname(char* buf, size_t buf_size, jlong n) {
   os::snprintf_checked(buf, buf_size, JLONG_FORMAT, n);
   return buf;
