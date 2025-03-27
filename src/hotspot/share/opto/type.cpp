@@ -1975,16 +1975,7 @@ bool TypeInt::is_finite() const {
 // Dump TypeInt
 #ifndef PRODUCT
 static const char* intname(char* buf, size_t buf_size, jint n) {
-  if (n == min_jint)
-    return "min";
-  else if (n < min_jint + 10000)
-    os::snprintf_checked(buf, buf_size, "min+" INT32_FORMAT, n - min_jint);
-  else if (n == max_jint)
-    return "max";
-  else if (n > max_jint - 10000)
-    os::snprintf_checked(buf, buf_size, "max-" INT32_FORMAT, max_jint - n);
-  else
-    os::snprintf_checked(buf, buf_size, INT32_FORMAT, n);
+  os::snprintf_checked(buf, buf_size, INT32_FORMAT, n);
   return buf;
 }
 
@@ -2257,23 +2248,7 @@ static const char* longnamenear(jlong x, const char* xname, char* buf, size_t bu
 }
 
 static const char* longname(char* buf, size_t buf_size, jlong n) {
-  const char* str;
-  if (n == min_jlong)
-    return "min";
-  else if (n < min_jlong + 10000)
-    os::snprintf_checked(buf, buf_size, "min+" JLONG_FORMAT, n - min_jlong);
-  else if (n == max_jlong)
-    return "max";
-  else if (n > max_jlong - 10000)
-    os::snprintf_checked(buf, buf_size, "max-" JLONG_FORMAT, max_jlong - n);
-  else if ((str = longnamenear(max_juint, "maxuint", buf, buf_size, n)) != nullptr)
-    return str;
-  else if ((str = longnamenear(max_jint, "maxint", buf, buf_size, n)) != nullptr)
-    return str;
-  else if ((str = longnamenear(min_jint, "minint", buf, buf_size, n)) != nullptr)
-    return str;
-  else
-    os::snprintf_checked(buf, buf_size, JLONG_FORMAT, n);
+  os::snprintf_checked(buf, buf_size, JLONG_FORMAT, n);
   return buf;
 }
 
