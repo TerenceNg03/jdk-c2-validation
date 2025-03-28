@@ -1431,7 +1431,7 @@ bool TypeF::is_nan()    const {
 void TypeF::dump2( Dict &d, uint depth, outputStream *st ) const {
   Type::dump2(d,depth, st);
   const char* bits = reinterpret_cast<const char*>(&_f);
-  for(std::size_t n = (sizeof _f) - 1; n >= 0; n--){
+  for(std::size_t n = (sizeof _f) - 1;; n--){
     for(int i = 7; i >= 0; i--){
       st->print("%d", (bits[n]>>i) & 1);
     }
@@ -1682,7 +1682,7 @@ bool TypeD::is_nan()    const {
 void TypeD::dump2( Dict &d, uint depth, outputStream *st ) const {
   Type::dump2(d,depth,st);
   const char* bits = reinterpret_cast<const char*>(&_d);
-  for(std::size_t n = (sizeof _d) - 1; n >= 0; n--){
+  for(std::size_t n = (sizeof _d) - 1;; n--){
     for(int i = 7; i >= 0; i--){
       st->print("%d", (bits[n]>>i) & 1);
     }
