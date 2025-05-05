@@ -67,7 +67,7 @@ Node *MulNode::Ideal(PhaseGVN *phase, bool can_reshape) {
   uint op = Opcode();
   bool real_mul = (op == Op_MulI) || (op == Op_MulL) ||
                   (op == Op_MulF) || (op == Op_MulD) ||
-                  (op == Op_MulHF);
+                  (op == Op_MulHF) || (op == Op_AndI);
 
   // Convert "(-a)*(-b)" into "a*b".
   if (real_mul && in1->is_Sub() && in2->is_Sub()) {
@@ -121,7 +121,6 @@ Node *MulNode::Ideal(PhaseGVN *phase, bool can_reshape) {
   // If the right input is a constant, and the left input is a product of a
   // constant, flatten the expression tree.
   if( t2->singleton() &&        // Right input is a constant?
-      op != Op_MulF &&          // Float & double cannot reassociate
       op != Op_MulD &&
       op != Op_MulHF) {
     if( t2 == Type::TOP ) return nullptr;
@@ -192,7 +191,7 @@ const Type* MulNode::Value(PhaseGVN* phase) const {
   // Either input is ZERO ==> the result is ZERO.
   // Not valid for floats or doubles since +0.0 * -0.0 --> +0.0
   int op = Opcode();
-  if( op == Op_MulI || op == Op_AndI || op == Op_MulL || op == Op_AndL ) {
+  if( op == Op_MulI || op == Op_AndI || op == Op_MulL || op == Op_AndL || op == Op_MulF) {
     const Type *zero = add_id();        // The multiplicative zero
     if( t1->higher_equal( zero ) ) return zero;
     if( t2->higher_equal( zero ) ) return zero;
@@ -1173,7 +1172,7 @@ Node *LShiftLNode::Ideal(PhaseGVN *phase, bool can_reshape) {
     assert( add1 != add1->in(1), "dead loop in LShiftLNode::Ideal" );
 
     // Left input is an add of the same number?
-    if (con != (BitsPerJavaLong - 1) && add1->in(1) == add1->in(2)) {
+    if (add1->in(1) == add1->in(2)) {
       // Convert "(x + x) << c0" into "x << (c0 + 1)"
       // Can only be applied if c0 != 63 because:
       // (x + x) << 63 = 2x << 63, while
