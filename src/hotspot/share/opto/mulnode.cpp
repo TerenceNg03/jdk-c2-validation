@@ -192,7 +192,7 @@ const Type* MulNode::Value(PhaseGVN* phase) const {
   // Either input is ZERO ==> the result is ZERO.
   // Not valid for floats or doubles since +0.0 * -0.0 --> +0.0
   int op = Opcode();
-  if( op == Op_MulI || op == Op_AndI || op == Op_MulL || op == Op_AndL ) {
+  if( op == Op_MulI || op == Op_AndI || op == Op_MulL || op == Op_AndL || op == Op_MulF) {
     const Type *zero = add_id();        // The multiplicative zero
     if( t1->higher_equal( zero ) ) return zero;
     if( t2->higher_equal( zero ) ) return zero;
