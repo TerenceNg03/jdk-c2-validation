@@ -121,7 +121,6 @@ Node *MulNode::Ideal(PhaseGVN *phase, bool can_reshape) {
   // If the right input is a constant, and the left input is a product of a
   // constant, flatten the expression tree.
   if( t2->singleton() &&        // Right input is a constant?
-      op != Op_MulF &&          // Float & double cannot reassociate
       op != Op_MulD &&
       op != Op_MulHF) {
     if( t2 == Type::TOP ) return nullptr;
