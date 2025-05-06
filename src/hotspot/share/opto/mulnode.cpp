@@ -67,7 +67,7 @@ Node *MulNode::Ideal(PhaseGVN *phase, bool can_reshape) {
   uint op = Opcode();
   bool real_mul = (op == Op_MulI) || (op == Op_MulL) ||
                   (op == Op_MulF) || (op == Op_MulD) ||
-                  (op == Op_MulHF);
+                  (op == Op_MulHF) || (op == Op_AndI);
 
   // Convert "(-a)*(-b)" into "a*b".
   if (real_mul && in1->is_Sub() && in2->is_Sub()) {
